@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Guest {
+  id        String   @id @default(uuid())
+  nickname  String   @unique
+  createdAt DateTime @default(now())
+
+  lists     List[]
+  cards     Card[]
+}
+
+model Board {
+  id        Int      @id @default(autoincrement())
+  title     String
+  createdAt DateTime @default(now())
+  
+  lists     List[]
+}
+
+model List {
+  id        Int      @id @default(autoincrement())
+  boardId   Int
+  title     String
+  position  String   // LexoRank string
+  creatorId String
+  createdAt DateTime @default(now())
+  
+  board     Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  creator   Guest    @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  cards     Card[]
+}
+
+model Card {
+  id        Int      @id @default(autoincrement())
+  listId    Int
+  title     String
+  content   String?
+  position  String   // LexoRank string
+  creatorId String
+  createdAt DateTime @default(now())
+  
+  list      List     @relation(fields: [listId], references: [id], onDelete: Cascade)
+  creator   Guest    @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+}
