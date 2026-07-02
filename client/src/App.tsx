@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import type { DropResult } from '@hello-pangea/dnd';
 import { useBoardStore, calculateNewPosition } from './store/useBoardStore';
@@ -6,7 +6,7 @@ import { useAuthStore } from './store/useAuthStore';
 import { Plus, GripHorizontal, LogOut, Trash2, Pencil } from 'lucide-react';
 
 function App() {
-  const { token, guest, loginAsGuest, logout } = useAuthStore();
+  const { token, guest, loginAsGuest } = useAuthStore();
   const [nicknameInput, setNicknameInput] = useState('');
 
   if (!token || !guest) {
