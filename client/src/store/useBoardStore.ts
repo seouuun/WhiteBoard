@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import axios from 'axios';
 import { LexoRank } from 'lexorank';
 
-const API_URL = 'http://localhost:4000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
 
 export interface Card {
   id: number;
